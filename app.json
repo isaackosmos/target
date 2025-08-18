@@ -17,6 +17,9 @@
       "icon": "./assets/ios-icon.png",
       "bundleIdentifier": "com.isaackosmos.target"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
