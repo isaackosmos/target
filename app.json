@@ -13,13 +13,9 @@
       }
     },
     "ios": {
-      "blundleIdentifier": "com.isaackosmos.target",
       "icon": "./assets/ios-icon.png",
       "bundleIdentifier": "com.isaackosmos.target"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ]
+    "plugins": ["expo-router", "expo-font"]
   }
 }
