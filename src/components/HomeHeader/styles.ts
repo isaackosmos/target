@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   total: {
     fontSize: 32,
     color: colors.white,
-    fontFamily: fontFamily.meduim,
+    fontFamily: fontFamily.medium,
   },
   summary: {
     width: "100%",

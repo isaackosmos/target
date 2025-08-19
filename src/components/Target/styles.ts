@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   name: {
     fontSize: 14,
     color: colors.black,
-    fontFamily: fontFamily.meduim,
+    fontFamily: fontFamily.medium,
   },
   status: {
     fontSize: 10,
