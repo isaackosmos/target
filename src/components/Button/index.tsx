@@ -19,6 +19,7 @@ export function Button({ title, isLoading = false, ...rest }: Props) {
       style={styles.container}
       activeOpacity={0.8}
       disabled={isLoading}
+      {...rest}
     >
       <Text style={styles.title}>
         {isLoading ? (

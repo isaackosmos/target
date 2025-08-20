@@ -41,8 +41,6 @@ export function HomeHeader({ data }: Props) {
           isLeft
         />
       </View>
-
-      <View></View>
     </LinearGradient>
   );
 }

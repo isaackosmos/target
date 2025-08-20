@@ -22,7 +22,7 @@ type Props = TouchableOpacityProps & {
 
 export function Target({ data, ...rest }: Props) {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} {...rest}>
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
           {data.name}
