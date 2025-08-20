@@ -15,17 +15,17 @@ const summary = {
 const targets = [
   {
     id: "1",
-    name: "aaa",
-    percentage: "aaa",
-    current: "aaa",
-    target: "aaa",
+    name: "AppleWatch",
+    percentage: "50%",
+    current: "R$ 500,00",
+    target: "R$ 2.680,00",
   },
   {
     id: "2",
-    name: "aaa",
-    percentage: "aaa",
-    current: "aaa",
-    target: "aaa",
+    name: "Comprar uma cadeira ergonomica",
+    percentage: "25%",
+    current: "R$ 400,00",
+    target: "R$ 690,00",
   },
 ];
 
