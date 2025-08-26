@@ -47,7 +47,7 @@ export function useTargetDatabase() {
           targets.updated_at
         FROM targets 
         LEFT JOIN transactions ON targets.id = transactions.target_id
-        WHERE tagets.id = ${id}
+        WHERE targets.id = ${id}
       `);
   }
 
