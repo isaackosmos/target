@@ -1,10 +1,14 @@
-import { View, StatusBar } from "react-native";
-import { router } from "expo-router";
+import { View, StatusBar, Alert } from "react-native";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 
 import { List } from "@/components/List";
-import { Target } from "@/components/Target";
 import { Button } from "@/components/Button";
+import { Loading } from "@/components/Loading";
 import { HomeHeader } from "@/components/HomeHeader";
+import { Target, TargetProps } from "@/components/Target";
+
+import { useTargetDatabase } from "@/database/useTargetDatabase";
 
 const summary = {
   total: "R$ 2.680,00",
@@ -12,24 +16,44 @@ const summary = {
   output: { label: "Saídas", value: "-R$ 883.90" },
 };
 
-const targets = [
-  {
-    id: "1",
-    name: "AppleWatch",
-    percentage: "50%",
-    current: "R$ 500,00",
-    target: "R$ 2.680,00",
-  },
-  {
-    id: "2",
-    name: "Comprar uma cadeira ergonomica",
-    percentage: "25%",
-    current: "R$ 400,00",
-    target: "R$ 690,00",
-  },
-];
-
 export default function Index() {
+  const [isFetching, setIsFetching] = useState(true);
+  const [targets, setTargets] = useState<TargetProps[]>([]);
+  const targetDatabase = useTargetDatabase();
+
+  async function fetchTargets(): Promise<TargetProps[]> {
+    try {
+      const response = await targetDatabase.listBySavedValue();
+
+      return response.map((item) => ({
+        id: String(item.id),
+        name: item.name,
+        current: String(item.current),
+        percentage: item.percentage.toFixed(0) + "%",
+        target: String(item.amount),
+      }));
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar as metas.");
+      console.log(error);
+    }
+  }
+
+  async function fetchData() {
+    const targetDataPromise = fetchTargets();
+
+    const [targetData] = await Promise.all([targetDataPromise]);
+    setTargets(targetData);
+    setIsFetching(false);
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  if (isFetching) return <Loading />;
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />
