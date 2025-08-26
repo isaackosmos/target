@@ -8,6 +8,7 @@ import { Loading } from "@/components/Loading";
 import { HomeHeader } from "@/components/HomeHeader";
 import { Target, TargetProps } from "@/components/Target";
 
+import { numberToCurrency } from "@/utils/numberToCurrency";
 import { useTargetDatabase } from "@/database/useTargetDatabase";
 
 const summary = {
@@ -28,9 +29,9 @@ export default function Index() {
       return response.map((item) => ({
         id: String(item.id),
         name: item.name,
-        current: String(item.current),
+        current: numberToCurrency(item.current),
         percentage: item.percentage.toFixed(0) + "%",
-        target: String(item.amount),
+        target: numberToCurrency(item.amount),
       }));
     } catch (error) {
       Alert.alert("Erro", "Não foi possível carregar as metas.");
