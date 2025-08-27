@@ -39,7 +39,7 @@ export function useTransactionsDatabase() {
     statement.executeAsync({
       $target_id: data.target_id,
       $amount: data.amount,
-      $observations: data.observation,
+      $observation: data.observation,
     });
   }
 
