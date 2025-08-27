@@ -47,7 +47,7 @@ export default function InProgress() {
     }
   }
 
-  async function fetchTransitions() {
+  async function fetchTransactions() {
     try {
       const response = await transactionsDatabase.listByTargetId(
         Number(params.id)
@@ -71,9 +71,9 @@ export default function InProgress() {
 
   async function fetchData() {
     const fetchDetailsPromise = fetchDetails();
-    const fetchTransitionsPromise = fetchTransitions();
+    const fetchTransactionsPromise = fetchTransactions();
 
-    await Promise.all([fetchDetailsPromise, fetchTransitionsPromise]);
+    await Promise.all([fetchDetailsPromise, fetchTransactionsPromise]);
     setIsFetching(false);
   }
 
