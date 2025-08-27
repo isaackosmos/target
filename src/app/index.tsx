@@ -5,21 +5,19 @@ import { router, useFocusEffect } from "expo-router";
 import { List } from "@/components/List";
 import { Button } from "@/components/Button";
 import { Loading } from "@/components/Loading";
-import { HomeHeader } from "@/components/HomeHeader";
 import { Target, TargetProps } from "@/components/Target";
+import { HomeHeader, HomeHeaderProps } from "@/components/HomeHeader";
 
 import { numberToCurrency } from "@/utils/numberToCurrency";
 import { useTargetDatabase } from "@/database/useTargetDatabase";
-
-const summary = {
-  total: "R$ 2.680,00",
-  input: { label: "Entradas", value: "R$ 6,184.90" },
-  output: { label: "Saídas", value: "-R$ 883.90" },
-};
+import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
 
 export default function Index() {
+  const [summary, setSummary] = useState<HomeHeaderProps>();
   const [isFetching, setIsFetching] = useState(true);
   const [targets, setTargets] = useState<TargetProps[]>([]);
+
+  const transactionsDatabase = useTransactionsDatabase();
   const targetDatabase = useTargetDatabase();
 
   async function fetchTargets(): Promise<TargetProps[]> {
@@ -39,10 +37,36 @@ export default function Index() {
     }
   }
 
+  async function fetchSummary(): Promise<HomeHeaderProps> {
+    try {
+      const response = await transactionsDatabase.summary();
+
+      return {
+        total: numberToCurrency(response.input + response.output),
+        input: {
+          label: "Entradas",
+          value: numberToCurrency(response.input),
+        },
+        output: {
+          label: "Saídas",
+          value: numberToCurrency(response.output),
+        },
+      };
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar o resumo.");
+      console.log(error);
+    }
+  }
+
   async function fetchData() {
     const targetDataPromise = fetchTargets();
+    const dataSummaryPromise = fetchSummary();
 
-    const [targetData] = await Promise.all([targetDataPromise]);
+    const [targetData, dataSummary] = await Promise.all([
+      targetDataPromise,
+      dataSummaryPromise,
+    ]);
+    setSummary(dataSummary);
     setTargets(targetData);
     setIsFetching(false);
   }
