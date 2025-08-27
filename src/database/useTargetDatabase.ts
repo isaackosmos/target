@@ -22,7 +22,7 @@ export type TargetResponse = {
 export function useTargetDatabase() {
   const database = useSQLiteContext();
 
-  function listBySavedValue() {
+  function listByClosestTarget() {
     return database.getAllAsync<TargetResponse>(`
         SELECT 
           targets.id,
@@ -91,6 +91,6 @@ export function useTargetDatabase() {
     create,
     update,
     remove,
-    listBySavedValue,
+    listByClosestTarget,
   };
 }
